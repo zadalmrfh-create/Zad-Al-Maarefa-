@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة النور الإسلامية</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'islamic-gold': '#D4AF37',
+                        'islamic-green': '#1B4D3E',
+                        'islamic-dark-green': '#0F2E24',
+                        'islamic-cream': '#F9F7F2',
+                        'islamic-sand': '#E8E0D5',
+                    },
+                    fontFamily: {
+                        'amiri': ['Amiri', 'serif'],
+                        'tajawal': ['Tajawal', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'islamic-pattern': "url('data:image/svg+xml,%3Csvg width=\\'60\\' height=\\'60\\' viewBox=\\'0 0 60 60\\' xmlns=\\'http://www.w3.org/2000/svg\\'%3E%3Cg fill=\\'none\\' fill-rule=\\'evenodd\\'%3E%3Cg fill=\\'%231B4D3E\\' fill-opacity=\\'0.05\\'%3E%3Cpath d=\\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animation */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #F9F7F2;
+            overflow-x: hidden;
+        }
+
+        .font-amiri {
+            font-family: 'Amiri', serif;
+        }
+
+        /* Islamic Geometric Shape Decorations */
+        .geometric-decoration {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1B4D3E;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Gradient Text */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #D4AF37, #F2D06B, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Card Hover Effects */
+        .islamic-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .islamic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: 0.5s;
+        }
+        
+        .islamic-card:hover::before {
+            left: 100%;
+        }
+
+        .islamic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(27, 77, 62, 0.15);
+        }
+
+        /* Hero Animation */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Moon and Stars Animation */
+        .moon-glow {
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.4);
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Prayer Time Indicator */
+        .prayer-active {
+            background: linear-gradient(135deg, #D4AF37 0%, #F2D06B 100%);
+            color: #1B4D3E;
+            font-weight: bold;
+            transform: scale(1.05);
+            border: 2px solid #fff;
+        }
+
+        /* Mobile Menu Animation */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.hidden-menu {
+            transform: translateX(100%);
+        }
+        .mobile-menu.show-menu {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-islamic-cream/90 backdrop-blur-md shadow-sm border-b border-islamic-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-islamic-green rounded-full flex items-center justify-center text-islamic-gold border-2 border-islamic-gold">
+                        <i class="fa-solid fa-kaaba"></i>
+                    </div>
+                    <span class="text-2xl font-bold font-amiri text-islamic-green">منصة النور</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 space-x-reverse font-medium text-islamic-dark-green">
+                    <a href="#home" class="hover:text-islamic-gold transition-colors">الرئيسية</a>
+                    <a href="#quran" class="hover:text-islamic-gold transition-colors">القرآن الكريم</a>
+                    <a href="#prayer-times" class="hover:text-islamic-gold transition-colors">مواقيت الصلاة</a>
+                    <a href="#articles" class="hover:text-islamic-gold transition-colors">المقالات</a>
+                    <a href="#contact" class="hover:text-islamic-gold transition-colors">اتصل بنا</a>
+                </div>
+
+                <!-- CTA & Mobile Toggle -->
+                <div class="flex items-center gap-4">
+                    <button class="hidden md:block bg-islamic-green text-white px-6 py-2 rounded-full font-medium hover:bg-islamic-gold hover:text-islamic-dark-green transition-all duration-300 shadow-lg">
+                        تبرع الآن
+                    </button>
+                    <button id="mobile-menu-btn" class="md:hidden text-islamic-green text-2xl focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden-menu fixed top-0 right-0 w-64 h-full bg-islamic-cream shadow-xl md:hidden flex flex-col p-6 z-50 border-l border-islamic-gold/20">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-xl font-bold font-amiri text-islamic-green">القائمة</span>
+                <button id="close-menu-btn" class="text-islamic-green text-2xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="flex flex-col gap-6 font-medium text-islamic-dark-green">
+                <a href="#home" class="hover:text-islamic-gold transition-colors">الرئيسية</a>
+                <a href="#quran" class="hover:text-islamic-gold transition-colors">القرآن الكريم</a>
+                <a href="#prayer-times" class="hover:text-islamic-gold transition-colors">مواقيت الصلاة</a>
+                <a href="#articles" class="hover:text-islamic-gold transition-colors">المقالات</a>
+                <a href="#contact" class="hover:text-islamic-gold transition-colors">اتصل بنا</a>
+                <button class="mt-4 bg-islamic-green text-white px-6 py-3 rounded-full font-medium hover:bg-islamic-gold hover:text-islamic-dark-green transition-all">
+                    تبرع الآن
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center bg-islamic-dark-green overflow-hidden pt-20">
+        <!-- Decorative Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10 bg-islamic-pattern"></div>
+        
+        <!-- Moon & Stars Visual -->
+        <div class="absolute top-20 left-10 md:left-20 w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-yellow-100 to-yellow-200 moon-glow floating flex items-center justify-center overflow-hidden">
+            <!-- Crescent Shape approximation via border radius tricks or SVG, here using simple styling -->
+            <div class="absolute w-full h-full rounded-full bg-islamic-dark-green -translate-x-4 -translate-y-2"></div>
+            <div class="w-28 h-28 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-yellow-100 to-yellow-50 shadow-inner relative z-10"></div>
+        </div>
+
+        <!-- Dynamic Stars -->
+        <div id="stars-container" class="absolute inset-0 pointer-events-none"></div>
+
+        <div class="relative z-10 container mx-auto px-4 text-center">
+            <div class="inline-block mb-4 px-4 py-1 rounded-full border border-islamic-gold/30 bg-islamic-gold/10 text-islamic-gold text-sm md:text-base font-medium">
+                بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-amiri font-bold text-white mb-6 leading-tight">
+                رحلة روحانية في <br>
+                <span class="text-gradient-gold">عالم الإيمان</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                منصة إسلامية شاملة تجمع بين القرآن الكريم، الأذكار، والمقالات المتميزة لتعزيز مسيرتك الروحانية في الحياة اليومية.
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <a href="#quran" class="w-full md:w-auto px-8 py-4 bg-islamic-gold text-islamic-dark-green rounded-full font-bold text-lg hover:bg-white transition-all shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                    ابدأ القراءة
+                </a>
+                <a href="#prayer-times" class="w-full md:w-auto px-8 py-4 border border-white/30 text-white rounded-full font-medium text-lg hover:bg-white/10 transition-all backdrop-blur-sm">
+                    مواقيت الصلاة
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Wave -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none rotate-180">
+            <svg class="relative block w-[calc(100%+1.3px)] h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="fill-islamic-cream"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Prayer Times Section -->
+    <section id="prayer-times" class="py-20 bg-islamic-cream relative">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-islamic-gold font-bold tracking-wider uppercase">مواقيت الصلاة</span>
+                <h2 class="text-3xl md:text-4xl font-amiri font-bold text-islamic-dark-green mt-2">أوقات الصلاة اليوم</h2>
+                <div class="w-24 h-1 bg-islamic-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Date Display -->
+            <div class="text-center mb-10">
+                <p id="current-date" class="text-xl text-islamic-green font-medium"></p>
+                <p id="hijri-date" class="text-gray-500 mt-1"></p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+                <!-- Prayer Cards -->
+                <div class="prayer-card bg-white p-6 rounded-2xl shadow-md border border-islamic-sand text-center flex flex-col items-center justify-center min-h-[140px] cursor-pointer hover:border-islamic-gold transition-colors group" id="fajr-card">
+                    <i class="fa-solid fa-cloud-sun text-3xl text-gray-400 mb-3 group-hover:text-islamic-gold transition-colors"></i>
+                    <span class="block text-gray-500 font-medium mb-1">الفجر</span>
+                    <span class="block text-2xl font-bold text-islamic-dark-green">04:45</span>
+                </div>
+
+                <div class="prayer-card bg-white p-6 rounded-2xl shadow-md border border-islamic-sand text-center flex flex-col items-center justify-center min-h-[140px] cursor-pointer hover:border-islamic-gold transition-colors group" id="dhuhr-card">
+                    <i class="fa-solid fa-sun text-3xl text-yellow-500 mb-3 group-hover:text-islamic-gold transition-colors"></i>
+                    <span class="block text-gray-500 font-medium mb-1">الظهر</span>
+                    <span class="block text-2xl font-bold text-islamic-dark-green">12:30</span>
+                </div>
+
+                <div class="prayer-card bg-white p-6 rounded-2xl shadow-md border border-islamic-sand text-center flex flex-col items-center justify-center min-h-[140px] cursor-pointer hover:border-islamic-gold transition-colors group" id="asr-card">
+                    <i class="fa-solid fa-cloud-sun-rain text-3xl text-orange-400 mb-3 group-hover:text-islamic-gold transition-colors"></i>
+                    <span class="block text-gray-500 font-medium mb-1">العصر</span>
+                    <span class="block text-2xl font-bold text-islamic-dark-green">16:15</span>
+                </div>
+
+                <div class="prayer-card bg-white p-6 rounded-2xl shadow-md border border-islamic-sand text-center flex flex-col items-center justify-center min-h-[140px] cursor-pointer hover:border-islamic-gold transition-colors group" id="maghrib-card">
+                    <i class="fa-solid fa-moon text-3xl text-indigo-400 mb-3 group-hover:text-islamic-gold transition-colors"></i>
+                    <span class="block text-gray-500 font-medium mb-1">المغرب</span>
+                    <span class="block text-2xl font-bold text-islamic-dark-green">19:00</span>
+                </div>
+
+                <div class="prayer-card col-span-2 md:col-span-1 bg-white p-6 rounded-2xl shadow-md border border-islamic-sand text-center flex flex-col items-center justify-center min-h-[140px] cursor-pointer hover:border-islamic-gold transition-colors group" id="isha-card">
+                    <i class="fa-solid fa-star-and-crescent text-3xl text-islamic-green mb-3 group-hover:text-islamic-gold transition-colors"></i>
+                    <span class="block text-gray-500 font-medium mb-1">العشاء</span>
+                    <span class="block text-2xl font-bold text-islamic-dark-green">20:30</span>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button class="text-islamic-green font-medium hover:text-islamic-gold underline underline-offset-4 decoration-islamic-gold/30">تحميل جدول الصلاة</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quran & Features Section -->
+    <section id="quran" class="py-20 bg-white relative overflow-hidden">
+        <!-- Geometric Decoration Background -->
+        <div class="geometric-decoration top-0 right-0 w-64 h-64 border border-islamic-gold/20 rounded-full transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="geometric-decoration bottom-0 left-0 w-96 h-96 border border-islamic-green/10 rounded-full transform -translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <!-- Text Content -->
+                <div class="lg:w-1/2 text-center lg:text-right">
+                    <h2 class="text-3xl md:text-5xl font-amiri font-bold text-islamic-dark-green mb-6">
+                        تلاوة كتاب الله <br> <span class="text-islamic-gold">بأعلى صوت</span>
+                    </h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                        استمع إلى تلاوات عطرة لأشهر القراء حول العالم، وتابع القراءة بتجويد صحيح مع ميزات التحكم المتقدمة. القرآن الكريم هو دستور حياتنا ونور قلوبنا.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-islamic-cream/50 border border-islamic-sand hover:border-islamic-gold/50 transition-colors">
+                            <div class="w-12 h-12 bg-islamic-green/10 rounded-full flex items-center justify-center text-islamic-green text-xl">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <div class="text-right">
+                                <h3 class="font-bold text-islamic-dark-green text-lg">المصحف الإلكتروني</h3>
+                                <p class="text-sm text-gray-500">تصفح السور والآيات بسهولة تامة.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-islamic-cream/50 border border-islamic-sand hover:border-islamic-gold/50 transition-colors">
+                            <div class="w-12 h-12 bg-islamic-gold/10 rounded-full flex items-center justify-center text-islamic-gold text-xl">
+                                <i class="fa-solid fa-headphones-simple"></i>
+                            </div>
+                            <div class="text-right">
+                                <h3 class="font-bold text-islamic-dark-green text-lg">استماع متصل</h3>
+                                <p class="text-sm text-gray-500">تلاوات مرتلة وصوتيات نافعة.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-xl bg-islamic-cream/50 border border-islamic-sand hover:border-islamic-gold/50 transition-colors">
+                            <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 text-xl">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </div>
+                            <div class="text-right">
+                                <h3 class="font-bold text-islamic-dark-green text-lg">حفظ ومتابعة</h3>
+                                <p class="text-sm text-gray-500">احفظ مكانك وواصل تلاوتك.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <button class="bg-islamic-green text-white px-8 py-3 rounded-full font-bold hover:bg-islamic-gold hover:text-islamic-dark-green transition-all shadow-lg">
+                            اذهب للمصحف
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Quran Showcase -->
+                <div class="lg:w-1/2 w-full relative">
+                    <div class="relative z-10 bg-islamic-cream rounded-3xl p-8 shadow-2xl border border-islamic-gold/20 transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <!-- Header of Book -->
+                        <div class="text-center mb-8 border-b-2 border-dashed border-islamic-gold/30 pb-4">
+                            <h3 class="text-3xl font-amiri text-islamic-gold mb-2">سورة الفاتحة</h3>
+                            <span class="text-sm text-gray-500">مكية • 7 آيات</span>
+                        </div>
+
+                        <!-- Verses -->
+                        <div class="font-amiri text-2xl md:text-3xl text-islamic-dark-green leading-loose text-justify space-y-6">
+                            <p>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="text-islamic-gold text-xl align-top">﴿١﴾</span></p>
+                            <p>ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ <span class="text-islamic-gold text-xl align-top">﴿٢﴾</span></p>
+                            <p>ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ <span class="text-islamic-gold text-xl align-top">﴿٣﴾</span></p>
+                            <p>مَـٰلِكِ يَوْمِ ٱلدِّينِ <span class="text-islamic-gold text-xl align-top">﴿٤﴾</span></p>
+                            <p>إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ <span class="text-islamic-gold text-xl align-top">﴿٥﴾</span></p>
+                            <p>ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ <span class="text-islamic-gold text-xl align-top">﴿٦﴾</span></p>
+                            <p>صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ <span class="text-islamic-gold text-xl align-top">﴿٧﴾</span></p>
+                        </div>
+
+                        <!-- Play Control -->
+                        <div class="mt-8 flex justify-center items-center gap-6">
+                            <button class="text-gray-400 hover:text-islamic-green transition-colors"><i class="fa-solid fa-backward-step"></i></button>
+                            <button class="w-14 h-14 bg-islamic-gold rounded-full text-islamic-dark-green flex items-center justify-center text-2xl hover:scale-110 transition-transform shadow-lg shadow-yellow-200">
+                                <i class="fa-solid fa-play ml-1"></i>
+                            </button>
+                            <button class="text-gray-400 hover:text-islamic-green transition-colors"><i class="fa-solid fa-forward-step"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements behind card -->
+                    <div class="absolute -top-6 -right-6 w-20 h-20 bg-islamic-gold/20 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-islamic-green/20 rounded-full blur-xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Wisdom / Articles Section -->
+    <section id="articles" class="py-20 bg-islamic-green text-white relative">
+        <div class="absolute inset-0 bg-islamic-pattern opacity-5"></div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <span class="text-islamic-gold font-bold tracking-wider uppercase">حكمة اليوم</span>
+                    <h2 class="text-3xl md:text-4xl font-amiri font-bold mt-2">منوعات إسلامية</h2>
+                </div>
+                <a href="#" class="text-islamic-gold hover:text-white transition-colors mt-4 md:mt-0 flex items-center gap-2">
+                    تصفح المقالات <i class="fa-solid fa-arrow-left"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <article class="islamic-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <!-- Placeholder Image -->
+                        <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-gray-500">
+                            <i class="fa-solid fa-mosque text-6xl text-white/20 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="absolute top-4 right-4 bg-islamic-gold text-islamic-dark-green text-xs font-bold px-3 py-1 rounded-full">أذكار</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 font-amiri group-hover:text-islamic-gold transition-colors">أذكار الصباح والمساء</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            تعرف على الأذكار النبوية المأثورة التي تحصن المسلم في بدء يومه وفي ختامه.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-islamic-gold text-sm font-medium hover:underline">
+                            اقرأ المزيد <i class="fa-solid fa-arrow-left mr-2 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="islamic-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-gray-500">
+                            <i class="fa-solid fa-hand-holding-heart text-6xl text-white/20 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="absolute top-4 right-4 bg-islamic-gold text-islamic-dark-green text-xs font-bold px-3 py-1 rounded-full">فقه</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 font-amiri group-hover:text-islamic-gold transition-colors">أهمية الصدقة في الإسلام</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            الصدقة برهان، وهي الوقاية من النار وكفارة للخطايا وطهارة للنفس.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-islamic-gold text-sm font-medium hover:underline">
+                            اقرأ المزيد <i class="fa-solid fa-arrow-left mr-2 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="islamic-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden group">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-gray-500">
+                            <i class="fa-solid fa-kaaba text-6xl text-white/20 group-hover:scale-110 transition-transform duration-500"></i>
+                        </div>
+                        <span class="absolute top-4 right-4 bg-islamic-gold text-islamic-dark-green text-xs font-bold px-3 py-1 rounded-full">عمره</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 font-amiri group-hover:text-islamic-gold transition-colors">كيف تستعد لعمرة مبرورة</h3>
+                        <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                            خطوات عملية ونصائح مهمة لكل من ينوي زيارة البيت الحرام لأداء العمرة.
+                        </p>
+                        <a href="#" class="inline-flex items-center text-islamic-gold text-sm font-medium hover:underline">
+                            اقرأ المزيد <i class="fa-solid fa-arrow-left mr-2 text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Subscribe / Newsletter Section -->
+    <section class="py-20 bg-islamic-cream">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="bg-white rounded-3xl p-10 shadow-xl border border-islamic-sand relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-l from-islamic-green via-islamic-gold to-islamic-green"></div>
+                
+                <i class="fa-regular fa-paper-plane text-4xl text-islamic-gold mb-6"></i>
+                <h2 class="text-3xl font-bold text-islamic-dark-green mb-4 font-amiri">اشترك في نشرتنا البريدية</h2>
+                <p class="text-gray-500 mb-8 max-w-xl mx-auto">احصل على مقالات جديدة، مواعيد مهمة، وحكم يومية مباشرة إلى بريدك الإلكتروني.</p>
+                
+                <form class="flex flex-col md:flex-row gap-4 max-w-lg mx-auto" onsubmit="event.preventDefault(); subscribeUser();">
+                    <input type="email" id="email-input" placeholder="بريدك الإلكتروني" required 
+                           class="flex-1 px-6 py-3 rounded-full border border-gray-300 focus:border-islamic-gold focus:ring-2 focus:ring-islamic-gold/20 outline-none transition-all text-right bg-gray-50">
+                    <button type="submit" class="bg-islamic-green text-white px-8 py-3 rounded-full font-bold hover:bg-islamic-gold hover:text-islamic-dark-green transition-all shadow-lg">
+                        اشتراك
+                    </button>
+                </form>
+                <p id="subscribe-message" class="mt-4 text-sm text-green-600 hidden">شكراً لاشتراكك! وصلنا بنجاح.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-islamic-dark-green text-white pt-16 pb-8 border-t border-islamic-gold/20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-islamic-gold border border-islamic-gold">
+                            <i class="fa-solid fa-kaaba"></i>
+                        </div>
+                        <span class="text-2xl font-bold font-amiri">منصة النور</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        منصة تهدف إلى نشر المحتوى الإسلامي الصحيح بأسلوب عصري ومقروء، لتسهيل الوصول للمعلومة الشرعية لكل المسلمين.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-islamic-gold hover:text-islamic-dark-green flex items-center justify-center transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-islamic-gold hover:text-islamic-dark-green flex items-center justify-center transition-all"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-islamic-gold hover:text-islamic-dark-green flex items-center justify-center transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/5 hover:bg-islamic-gold hover:text-islamic-dark-green flex items-center justify-center transition-all"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-islamic-gold">روابط سريعة</h4>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">القرآن الكريم</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">الحديث الشريف</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">الأذكار والأدعية</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">مكتبة المقالات</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">الأسئلة والأجوبة</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-islamic-gold">خدماتنا</h4>
+                    <ul class="space-y-3 text-gray-300 text-sm">
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">حاسبة الزكاة</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">اتجاه القبلة</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">التقويم الهجري</a></li>
+                        <li><a href="#" class="hover:text-islamic-gold transition-colors">أسماء الله الحسنى</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-islamic-gold">تواصل معنا</h4>
+                    <ul class="space-y-4 text-gray-300 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-islamic-gold"></i>
+                            <span>الرياض، المملكة العربية السعودية</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-islamic-gold"></i>
+                            <span>info@noor-platform.com</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-islamic-gold"></i>
+                            <span>+966 12 345 6789</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>جميع الحقوق محفوظة &copy; 2023 منصة النور الإسلامية</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">سياسة الخصوصية</a>
+                    <a href="#" class="hover:text-white transition-colors">الشروط والأحكام</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // --- 1. Star Generation for Hero Section ---
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const starCount = 50;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const x = Math.random() * 100;
+                const y = Math.random() * 80; // Keep mostly in upper half
+                
+                // Random size
+                const size = Math.random() * 2 + 1;
+                
+                // Random animation delay
+                const delay = Math.random() * 3;
+                
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(star);
+            }
+        }
+
+        // --- 2. Mobile Menu Logic ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden-menu');
+            mobileMenu.classList.toggle('show-menu');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(!mobileMenu.classList.contains('hidden-menu')) {
+                    toggleMenu();
+                }
+            });
+        });
+
+        // --- 3. Date & Time Logic ---
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const arabicDate = now.toLocaleDateString('ar-SA', options);
+            
+            document.getElementById('current-date').textContent = arabicDate;
+            document.getElementById('hijri-date').textContent = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {day: 'numeric', month: 'long', year: 'numeric'}).format(now);
+        }
+
+        // --- 4. Highlight Current Prayer Time (Simulation) ---
+        function highlightCurrentPrayer() {
+            // In a real app, you would use a library like 'adhan' to get exact times based on location.
+            // Here we simulate logic based on current hour.
+            const hour = new Date().getHours();
+            const cards = [
+                { id: 'fajr-card', start: 4, end: 12 },
+                { id: 'dhuhr-card', start: 12, end: 16 },
+                { id: 'asr-card', start: 16, end: 19 },
+                { id: 'maghrib-card', start: 19, end: 20 },
+                { id: 'isha-card', start: 20, end: 24 },
+                { id: 'fajr-card', start: 0, end: 4 } // Handle early morning
+            ];
+
+            // Remove active class first
+            document.querySelectorAll('.prayer-card').forEach(c => c.classList.remove('prayer-active'));
+
+            // Find active
+            const activeCard = cards.find(c => hour >= c.start && hour < c.end);
+            if (activeCard) {
+                const el = document.getElementById(activeCard.id);
+                if(el) el.classList.add('prayer-active');
+            }
+        }
+
+        // --- 5. Subscribe Interaction ---
+        function subscribeUser() {
+            const btn = document.querySelector('form button');
+            const msg = document.getElementById('subscribe-message');
+            const input = document.getElementById('email-input');
+
+            // Simulate loading
+            const originalText = btn.textContent;
+            btn.textContent = 'جاري الإرسال...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                input.value = '';
+                msg.classList.remove('hidden');
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    msg.classList.add('hidden');
+                }, 3000);
+            }, 1500);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            updateDate();
+            highlightCurrentPrayer();
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-md');
+                    nav.classList.replace('bg-islamic-cream/90', 'bg-islamic-cream/95');
+                } else {
+                    nav.classList.remove('shadow-md');
+                    nav.classList.replace('bg-islamic-cream/95', 'bg-islamic-cream/90');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
